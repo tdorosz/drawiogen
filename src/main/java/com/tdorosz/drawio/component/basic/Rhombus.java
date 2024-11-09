@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
-public class Rectangle implements DrawioShape {
+public class Rhombus implements DrawioShape {
 
     private String id = UUID.randomUUID().toString();
     private String value;
@@ -28,14 +28,14 @@ public class Rectangle implements DrawioShape {
     private Integer height = 100;
     private Style style;
 
-    public static Rectangle newRectangle(Integer x, Integer y) {
-        return new Rectangle()
+    public static Rhombus newRhombus(Integer x, Integer y) {
+        return new Rhombus()
                 .x(x)
                 .y(y)
                 .style(new Style());
     }
 
-    public Rectangle style(Style style) {
+    public Rhombus style(Style style) {
         this.style = style.parent(this);
         return this;
     }
@@ -62,8 +62,9 @@ public class Rectangle implements DrawioShape {
     @Accessors(fluent = true, chain = true)
     public static class Style {
         @ToStringExclude
-        private Rectangle parent;
+        private Rhombus parent;
 
+        private String rhombus = "";
         private BinaryState sketch = BinaryState.OFF;
         private BinaryState rounded = BinaryState.ON;
         private BinaryState glass;
@@ -76,7 +77,7 @@ public class Rectangle implements DrawioShape {
                     .toString(this, DrawioStyleToStringStyle.getInstance());
         }
 
-        public Rectangle styleEnd() {
+        public Rhombus styleEnd() {
             return parent;
         }
     }

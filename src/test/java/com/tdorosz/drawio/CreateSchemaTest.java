@@ -2,7 +2,9 @@ package com.tdorosz.drawio;
 
 import com.tdorosz.drawio.component.basic.Arrow;
 import com.tdorosz.drawio.component.BinaryState;
+import com.tdorosz.drawio.component.basic.Process;
 import com.tdorosz.drawio.component.basic.Rectangle;
+import com.tdorosz.drawio.component.basic.Rhombus;
 import com.tdorosz.drawio.service.DrawioGenerator;
 import com.tdorosz.drawio.model.MxCell;
 import com.tdorosz.drawio.model.MxGeometry;
@@ -124,6 +126,42 @@ class CreateSchemaTest {
         Files.writeString(Path.of(FILE_PATH), xml);
     }
 
+
+    @Test
+    void drawProcess() throws IOException {
+        MxGraphModel model = createBaseGraph();
+
+        Process r1 = Process.newRectangle(100, 100).value("1")
+                .style()
+                .fillColor(fromColor(COLOR_CYAN))
+                .styleEnd();
+        Rhombus r2 = Rhombus.newRhombus(100, 400).value("2")
+                .style()
+                .sketch(BinaryState.ON)
+                .glass(BinaryState.ON)
+                .fillColor(fromColor(COLOR_MEDIUMSEAGREEN))
+                .styleEnd();
+
+        Rectangle r3 = Rectangle.newRectangle(400, 0).value("3")
+                .style()
+                .glass(BinaryState.OFF)
+                .fillColor(fromColor(COLOR_MEDIUMSLATEBLUE))
+                .styleEnd();
+
+        Arrow arrow1 = Arrow.newArrow(r1.id(), r2.id());
+        Arrow arrow2 = Arrow.newArrow(r1.id(), r3.id());
+        Arrow arrow3 = Arrow.newArrow(r3.id(), r1.id());
+
+        model.addCell(arrow1.toMxCell());
+        model.addCell(arrow2.toMxCell());
+        model.addCell(arrow3.toMxCell());
+        model.addCell(r1.toMxCell());
+        model.addCell(r2.toMxCell());
+        model.addCell(r3.toMxCell());
+
+        String xml = drawioGenerator.generateXml(model);
+        Files.writeString(Path.of(FILE_PATH), xml);
+    }
 
     private static MxGraphModel createBaseGraph() {
         return MxGraphModel.builder()

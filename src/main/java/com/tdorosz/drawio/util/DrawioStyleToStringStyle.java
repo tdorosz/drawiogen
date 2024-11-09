@@ -24,11 +24,14 @@ public class DrawioStyleToStringStyle extends ToStringStyle {
             return;
         }
 
-        this.appendFieldStart(buffer, fieldName);
-        this.appendInternal(buffer, fieldName, value, this.isFullDetail(fullDetail));
+        if ("".equals(value)) {
+            buffer.append(fieldName);
+        } else {
+            this.appendFieldStart(buffer, fieldName);
+            this.appendInternal(buffer, fieldName, value, this.isFullDetail(fullDetail));
+        }
         this.appendFieldEnd(buffer, fieldName);
     }
-
 
     public static DrawioStyleToStringStyle getInstance() {
         return INSTANCE;

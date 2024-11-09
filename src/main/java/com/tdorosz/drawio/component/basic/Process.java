@@ -16,7 +16,7 @@ import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
-public class Rectangle implements DrawioShape {
+public class Process implements DrawioShape {
 
     private String id = UUID.randomUUID().toString();
     private String value;
@@ -28,14 +28,14 @@ public class Rectangle implements DrawioShape {
     private Integer height = 100;
     private Style style;
 
-    public static Rectangle newRectangle(Integer x, Integer y) {
-        return new Rectangle()
+    public static Process newRectangle(Integer x, Integer y) {
+        return new Process()
                 .x(x)
                 .y(y)
                 .style(new Style());
     }
 
-    public Rectangle style(Style style) {
+    public Process style(Style style) {
         this.style = style.parent(this);
         return this;
     }
@@ -62,9 +62,9 @@ public class Rectangle implements DrawioShape {
     @Accessors(fluent = true, chain = true)
     public static class Style {
         @ToStringExclude
-        private Rectangle parent;
+        private Process parent;
 
-        private BinaryState sketch = BinaryState.OFF;
+        private String shape = "process";
         private BinaryState rounded = BinaryState.ON;
         private BinaryState glass;
         private WhiteSpace whiteSpace = WhiteSpace.WRAP;
@@ -76,8 +76,9 @@ public class Rectangle implements DrawioShape {
                     .toString(this, DrawioStyleToStringStyle.getInstance());
         }
 
-        public Rectangle styleEnd() {
+        public Process styleEnd() {
             return parent;
         }
     }
+
 }
