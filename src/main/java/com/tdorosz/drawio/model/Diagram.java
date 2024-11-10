@@ -10,13 +10,13 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MxGraphModel {
+public class Diagram {
 
     @JacksonXmlProperty(isAttribute = true)
-    private Integer pageWidth;
+    private String id;
 
     @JacksonXmlProperty(isAttribute = true)
-    private Integer pageHeight;
+    private String name;
 
-    private Root root;
+    private MxGraphModel mxGraphModel;
 }

@@ -14,10 +14,10 @@ import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
-public class Arrow implements DrawioShape {
+public class Arrow implements DrawioShape<Arrow> {
 
-    private String id = UUID.randomUUID().toString();
-    private String parent = "1";
+    private final String id = UUID.randomUUID().toString();
+    private String parent;
     private String relative = "1";
     private String edge = "1";
     private String sourceId;
@@ -42,7 +42,7 @@ public class Arrow implements DrawioShape {
                 .id(id)
                 .edge(edge)
                 .parent(parent)
-                .style(style != null ? style.toStyleString() : null)
+                .style(style.toStyleString())
                 .source(sourceId)
                 .target(targetId)
                 .mxGeometry(MxGeometry.builder()
@@ -64,14 +64,14 @@ public class Arrow implements DrawioShape {
         private String orthogonalLoop = "1";
         private String jettySize = "auto";
         private String html = "1";
-        private String exitX = "0.5";
-        private String exitY = "0.5";
-        private String exitDx = "0";
-        private String exitDy = "0.5";
-        private String entryX = "0.5";
-        private String entryY = "0.5";
-        private String entryDx = "0";
-        private String entryDy = "0";
+        private String exitX;
+        private String exitY;
+        private String exitDx;
+        private String exitDy;
+        private String entryX;
+        private String entryY;
+        private String entryDx;
+        private String entryDy;
 
         public String toStyleString() {
             return ReflectionToStringBuilder

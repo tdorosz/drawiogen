@@ -16,11 +16,11 @@ import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
-public class Process implements DrawioShape {
+public class Process implements DrawioShape<Process> {
 
-    private String id = UUID.randomUUID().toString();
+    private final String id = UUID.randomUUID().toString();
     private String value;
-    private String parent = "1";
+    private String parent;
     private String vertex = "1";
     private Integer x = 0;
     private Integer y = 0;

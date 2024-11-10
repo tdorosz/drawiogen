@@ -6,6 +6,7 @@ import com.tdorosz.drawio.component.DrawioShape;
 import com.tdorosz.drawio.component.WhiteSpace;
 import com.tdorosz.drawio.model.MxCell;
 import com.tdorosz.drawio.model.MxGeometry;
+import com.tdorosz.drawio.model.ObjectWrapper;
 import com.tdorosz.drawio.util.DrawioStyleToStringStyle;
 import lombok.Data;
 import lombok.experimental.Accessors;
@@ -16,9 +17,9 @@ import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
-public class Rhombus implements DrawioShape {
+public class Rhombus implements DrawioShape<Rhombus> {
 
-    private String id = UUID.randomUUID().toString();
+    private final String id = UUID.randomUUID().toString();
     private String value;
     private String parent = "1";
     private String vertex = "1";

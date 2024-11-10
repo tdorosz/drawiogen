@@ -12,32 +12,21 @@ import java.util.Map;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class MxCell {
-
+public class ObjectWrapper {
     @JacksonXmlProperty(isAttribute = true)
     private String id;
 
     @JacksonXmlProperty(isAttribute = true)
-    private String value;
+    private String placeholders;
 
     @JacksonXmlProperty(isAttribute = true)
-    private String style;
+    private String label;
 
     @JacksonXmlProperty(isAttribute = true)
-    private String vertex;
+    private Map<String, String> customParams;
 
-    @JacksonXmlProperty(isAttribute = true)
-    private String parent;
+    @JacksonXmlProperty(localName = "mxCell")
+    private MxCell mxCell;
 
-    @JacksonXmlProperty(isAttribute = true)
-    private String source;
-
-    @JacksonXmlProperty(isAttribute = true)
-    private String target;
-
-    @JacksonXmlProperty(isAttribute = true)
-    private String edge;
-
-    private MxGeometry mxGeometry;
 
 }
