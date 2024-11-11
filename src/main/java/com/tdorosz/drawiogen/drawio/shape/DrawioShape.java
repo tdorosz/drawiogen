@@ -19,4 +19,7 @@ public interface DrawioShape<T> {
         return false;
     }
 
+    default boolean shouldAdd() {
+        return true;
+    }
 }

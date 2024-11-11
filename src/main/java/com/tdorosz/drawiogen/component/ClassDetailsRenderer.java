@@ -6,80 +6,59 @@ import com.tdorosz.drawiogen.drawio.shape.DrawioShape;
 import com.tdorosz.drawiogen.drawio.shape.basic.Rectangle;
 import lombok.Getter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
+@Getter
 public class ClassDetailsRenderer implements Renderer {
 
-    private static final String LOGS_KEY = "logs";
+    private static final int PARENT_WIDTH = 300;
+    private static final int PARENT_HEIGHT = 100;
+    private static final int BOTTOM_RIGHT_INFO_WIDTH = PARENT_WIDTH / 5;
+    private static final int BOTTOM_RIGHT_INFO_HEIGHT = PARENT_HEIGHT / 5;
+    private static final int TAB_INFO_HEIGHT = 20;
+    private static final int TAB_INFO_WIDTH = PARENT_WIDTH / 2;
 
-    @Getter
+    private static final int CONTAINER_TOP_RIGHT_WIDTH = PARENT_WIDTH / 3;
+    private static final int CONTAINER_TOP_RIGHT_HEIGHT = 20;
+
+    private final Rectangle parent;
     private final Rectangle bottomRightRectangle;
-
-    private Map<String, DrawioShape<?>> shapeMap = new HashMap<>();
-
-    private List<String> logs = new ArrayList<>();
+    private final Rectangle tabInfo;
+    private final Rectangle containerTopRight;
 
     public ClassDetailsRenderer() {
-        Rectangle main = Rectangle.newRectangle(0, 0)
-                .width(200)
-                .height(100)
-                .value("Main");
+        parent = Rectangle.newRectangle(0, 0)
+                .width(PARENT_WIDTH)
+                .height(PARENT_HEIGHT)
+                .style()
+                .styleEnd();
 
-        int infoWidth = main.width() / 5;
-        int infoHeight = main.height() / 5;
-
-        bottomRightRectangle = Rectangle.newRectangle(main.width() - infoWidth, main.height() - infoHeight)
-                .parent(main.id())
-                .width(infoWidth)
-                .height(infoHeight)
+        bottomRightRectangle = Rectangle.newRectangle(PARENT_WIDTH - BOTTOM_RIGHT_INFO_WIDTH, PARENT_HEIGHT - BOTTOM_RIGHT_INFO_HEIGHT)
+                .parent(parent.id())
+                .width(BOTTOM_RIGHT_INFO_WIDTH)
+                .height(BOTTOM_RIGHT_INFO_HEIGHT)
                 .style()
                 .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_ORANGERED))
                 .editable(BinaryState.OFF)
                 .connectable(BinaryState.OFF)
                 .styleEnd();
 
-        shapeMap.put("main", main);
-        shapeMap.put(LOGS_KEY, bottomRightRectangle);
-    }
+        tabInfo = Rectangle.newRectangle(0, -TAB_INFO_HEIGHT)
+                .parent(parent.id())
+                .width(TAB_INFO_WIDTH)
+                .height(TAB_INFO_HEIGHT);
 
-    public ClassDetailsRenderer addLogLine(String line) {
-        logs.add(line);
-        updateLogTooltip();
-        return this;
-    }
-
-    private void updateLogTooltip() {
-        Rectangle logsPart = (Rectangle) shapeMap.get(LOGS_KEY);
-
-        String collect = logs.stream()
-                .map(log -> {
-                    if (log.contains("error")) {
-                        return """
-                                <span style="color:red;">%s</span>
-                                """.formatted(log);
-                    }
-                    return """
-                                <span style="color:blue;">%s</span>
-                                """.formatted(log);
-                })
-                .collect(Collectors.joining(""));
-
-        logsPart.tooltip("""
-                        <pre>
-                        %s
-                        </pre>
-                        """.formatted(collect));
-
-
+        containerTopRight = Rectangle.newRectangle(PARENT_WIDTH - CONTAINER_TOP_RIGHT_WIDTH, 0)
+                .parent(parent.id())
+                .width(CONTAINER_TOP_RIGHT_WIDTH)
+                .height(TAB_INFO_HEIGHT);
     }
 
     public List<DrawioShape<?>> getShapes() {
-        return shapeMap.values()
-                .stream().toList();
+        return Stream.<DrawioShape<?>>of(parent, bottomRightRectangle, tabInfo, containerTopRight)
+                .filter(DrawioShape::shouldAdd)
+                .toList();
     }
 
 }

@@ -104,8 +104,9 @@ public class Rectangle implements DrawioShape<Rectangle> {
         private BinaryState editable = BinaryState.ON;
         private BinaryState connectable = BinaryState.ON;
         private BinaryState sketch = BinaryState.OFF;
-        private BinaryState rounded = BinaryState.ON;
+        private BinaryState rounded = BinaryState.OFF;
         private BinaryState glass;
+        private BinaryState shadow = BinaryState.ON;
         private WhiteSpace whiteSpace = WhiteSpace.WRAP;
         private BinaryState html = BinaryState.ON;
         private DrawioColor fillColor;
