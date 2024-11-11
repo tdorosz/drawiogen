@@ -9,7 +9,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>com.tdorosz</groupId>
-    <artifactId>drawio</artifactId>
+    <artifactId>drawiogen</artifactId>
     <version>0.0.1-SNAPSHOT</version>
     <name>drawio</name>
     <description>drawio</description>
