@@ -1,23 +1,30 @@
 package com.tdorosz.drawiogen.drawio.xmlschema;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlElementWrapper;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlRootElement;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.List;
+import java.util.Map;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
-@JacksonXmlRootElement(localName = "mxfile")
+@Accessors(fluent = true, chain = true)
+@XmlRootElement(name = "mxfile")
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MxFile {
 
-    @JacksonXmlElementWrapper(useWrapping = false)
-    @JacksonXmlProperty(localName = "diagram")
+    @XmlAnyAttribute
+    private Map<String, String> arguments;
+
+    @XmlAttribute(name = "agent")
+    private String agent;
+
+    @XmlAttribute(name = "host")
+    private String host;
+
+    @XmlAttribute(name = "version")
+    private String version;
+
+    @XmlElement(name = "diagram")
     private List<Diagram> diagrams;
 }

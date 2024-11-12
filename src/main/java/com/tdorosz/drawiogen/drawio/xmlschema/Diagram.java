@@ -1,22 +1,25 @@
 package com.tdorosz.drawiogen.drawio.xmlschema;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.Map;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Accessors(fluent = true, chain = true)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class Diagram {
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAnyAttribute
+    private Map<String, String> arguments;
+
+    @XmlAttribute(name = "id")
     private String id;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute(name = "name")
     private String name;
 
+    @XmlElement(name = "mxGraphModel")
     private MxGraphModel mxGraphModel;
 }

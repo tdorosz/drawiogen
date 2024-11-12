@@ -2,6 +2,7 @@ package com.tdorosz.drawiogen.usecase;
 
 import com.tdorosz.drawiogen.component.ClassDetailsRenderer;
 import com.tdorosz.drawiogen.drawio.shape.BinaryState;
+import com.tdorosz.drawiogen.drawio.shape.DrawioColor;
 import com.tdorosz.drawiogen.formatter.DeaultLogLinesFormatter;
 import com.tdorosz.drawiogen.formatter.LogLinesFormatter;
 import lombok.Getter;
@@ -33,13 +34,21 @@ public class ClassDescription implements UseCase {
 
     public ClassDescription classFullName(String classFullName) {
         this.renderer.getParent().value(classFullName);
+        if (classFullName.matches(".*Test.java")) {
+            this.renderer.getTabInfo().value("Test")
+                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_YELLOW));
+        } else if (classFullName.matches(".*[Dd]rawio.*")) {
+            this.renderer.getTabInfo().value("Drawio")
+                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_TEAL));
+        }
         return this;
     }
 
     private void updateLogs() {
         String logsTooltipText = logLinesFormatter.format(logLines);
         renderer.getBottomRightRectangle()
-                .tooltip(logsTooltipText);
+                .tooltip(logsTooltipText)
+                .value("Logs: %s".formatted(logLines.size()));
     }
 
     public void position(int x, int y) {

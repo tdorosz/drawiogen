@@ -42,20 +42,18 @@ public class Process implements DrawioShape<Process> {
 
     @Override
     public MxCell toMxCell() {
-        return MxCell.builder()
+        return new MxCell()
                 .id(id)
                 .value(value)
                 .parent(parent)
                 .vertex(vertex)
                 .style(style != null ? style.toStyleString() : null)
-                .mxGeometry(MxGeometry.builder()
+                .mxGeometry(new MxGeometry()
                         .x(x)
                         .y(y)
                         .width(width)
                         .height(height)
-                        .as("geometry")
-                        .build())
-                .build();
+                        .as("geometry"));
     }
 
     @Data

@@ -38,18 +38,16 @@ public class Arrow implements DrawioShape<Arrow> {
 
     @Override
     public MxCell toMxCell() {
-        return MxCell.builder()
+        return new MxCell()
                 .id(id)
                 .edge(edge)
                 .parent(parent)
                 .style(style.toStyleString())
                 .source(sourceId)
                 .target(targetId)
-                .mxGeometry(MxGeometry.builder()
+                .mxGeometry(new MxGeometry()
                         .relative(relative)
-                        .as("geometry")
-                        .build())
-                .build();
+                        .as("geometry"));
     }
 
     @Data

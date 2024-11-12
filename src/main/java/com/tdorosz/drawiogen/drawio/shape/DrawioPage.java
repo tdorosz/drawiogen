@@ -39,29 +39,23 @@ public class DrawioPage {
                 .toList();
 
         List<MxCell> standardCells = List.of(
-                MxCell.builder()
-                        .id(mainCellId)
-                        .build(),
-                MxCell.builder()
+                new MxCell()
+                        .id(mainCellId),
+                new MxCell()
                         .id(subCellId)
-                        .parent(mainCellId)
-                        .build());
+                        .parent(mainCellId));
 
         List<MxCell> allCells = Stream.concat(standardCells.stream(), cells.stream()).toList();
 
 
-        return Diagram.builder()
+        return new Diagram()
                 .id(id)
                 .name(name)
-                .mxGraphModel(MxGraphModel.builder()
+                .mxGraphModel(new MxGraphModel()
                         .pageHeight(pageHeight)
                         .pageWidth(pageWidth)
-                        .root(Root.builder()
-                                .cells(allCells)
-                                .objects(objectWrappers)
-                                .build())
-                        .build())
-                .build();
+                        .root(new Root().cells(allCells).objects(objectWrappers))
+                );
     }
 
     public void resize(int width, int height) {

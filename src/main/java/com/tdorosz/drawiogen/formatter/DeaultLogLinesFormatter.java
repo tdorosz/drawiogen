@@ -22,9 +22,7 @@ public class DeaultLogLinesFormatter implements LogLinesFormatter {
     }
 
     private static String wrapInPreTag(String collect) {
-        return """
-                <pre>%s</pre>
-                """.formatted(collect);
+        return "<pre>%s</pre>".formatted(collect);
     }
 
     private static String colorLog(String log, String color) {

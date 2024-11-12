@@ -20,8 +20,7 @@ public class DrawioFile {
                 .map(DrawioPage::toDiagram)
                 .toList();
 
-        return MxFile.builder()
-                .diagrams(diagrams)
-                .build();
+        return new MxFile()
+                .diagrams(diagrams);
     }
 }

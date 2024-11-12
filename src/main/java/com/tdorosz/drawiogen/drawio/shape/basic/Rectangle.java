@@ -10,21 +10,24 @@ import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
 import com.tdorosz.drawiogen.drawio.xmlschema.ObjectWrapper;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import lombok.extern.slf4j.Slf4j;
 import org.apache.commons.lang3.BooleanUtils;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringExclude;
 
-import java.util.LinkedHashMap;
+import java.util.HashMap;
 import java.util.Map;
 import java.util.UUID;
 
 @Data
 @Accessors(fluent = true, chain = true)
+@Slf4j
 public class Rectangle implements DrawioShape<Rectangle> {
 
     private final String id = UUID.randomUUID().toString();
-    private Map<String, String> customValues = new LinkedHashMap<>();
+    private Map<String, String> customValues = new HashMap<>();
     private Boolean placeholders;
+    private String tooltip;
     private String value;
     private String parent;
     private String vertex = "1";
@@ -47,47 +50,45 @@ public class Rectangle implements DrawioShape<Rectangle> {
     }
 
     public Rectangle tooltip(String value) {
-        customValues.put("tooltip", value);
+        tooltip = value;
         return this;
     }
 
     @Override
     public boolean shouldMapToObjectWrapper() {
-        return !customValues.isEmpty() || placeholders != null;
+        log.info("{}", customValues);
+
+        return !customValues.isEmpty() || placeholders != null || tooltip != null;
     }
 
 
     @Override
     public MxCell toMxCell() {
-        return MxCell.builder()
+        return new MxCell()
                 .id(id)
                 .value(value)
                 .parent(parent)
                 .vertex(vertex)
                 .style(style != null ? style.toStyleString() : null)
-                .mxGeometry(MxGeometry.builder()
+                .mxGeometry(new MxGeometry()
                         .x(x)
                         .y(y)
                         .width(width)
                         .height(height)
-                        .as("geometry")
-                        .build())
-                .build();
+                        .as("geometry"));
     }
 
     @Override
     public ObjectWrapper toObjectWrapper() {
-        MxCell mxCell = toMxCell();
-        mxCell.setId(null);
-        mxCell.setValue(null);
+        MxCell mxCell = toMxCell().id(null).value(null);
 
-        return ObjectWrapper.builder()
+        return new ObjectWrapper()
                 .id(id)
                 .label(value)
+                .tooltip(tooltip)
                 .placeholders(BooleanUtils.isTrue(placeholders) ? "1" : "0")
-                .customParams(customValues)
-                .mxCell(mxCell)
-                .build();
+                .arguments(customValues)
+                .mxCell(mxCell);
     }
 
     public Rectangle addCustomValue(String key, String value) {

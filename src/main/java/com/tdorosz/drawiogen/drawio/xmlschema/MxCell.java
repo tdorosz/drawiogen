@@ -1,41 +1,44 @@
 package com.tdorosz.drawiogen.drawio.xmlschema;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
+
+import java.util.Map;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Accessors(fluent = true, chain = true)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class MxCell {
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAnyAttribute
+    private Map<String, String> arguments;
+
+    @XmlAttribute
     private String id;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String value;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String style;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String vertex;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String parent;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String source;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String target;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String edge;
 
+    @XmlElement(name = "mxGeometry")
     private MxGeometry mxGeometry;
 
 }

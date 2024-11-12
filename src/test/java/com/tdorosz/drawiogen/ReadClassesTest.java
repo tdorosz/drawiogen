@@ -15,13 +15,12 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-
-import static com.tdorosz.drawiogen.drawio.shape.basic.Process.newProcess;
+import java.util.regex.Pattern;
 
 @Slf4j
 class ReadClassesTest {
 
-    private static final String PROJECT_PATH = "D:\\projekty\\java\\drawiogen\\src\\main\\java";
+    private static final String PROJECT_PATH = "D:\\projekty\\java\\drawiogen\\src";
     private static final String FILE_PATH = "D:\\projekty\\java\\drawiogen\\src\\test\\resources\\examples\\generated-3.xml";
 
     private MxFileSerializer mxFileSerializer = new MxFileSerializer();
@@ -56,8 +55,15 @@ class ReadClassesTest {
 
             ClassDescription classDescription = new ClassDescription();
 
+            Pattern logPattern = Pattern.compile("^\\s*(log\\.(error|debug|info)\\(.*\\);)$");
+
+            List<String> list = entry.getValue().lines()
+                    .filter(line -> logPattern.matcher(line).matches())
+                    .map(String::trim)
+                    .toList();
+
             classDescription
-//                    .addLogLines(logLines)
+                    .addLogLines(list)
                     .classFullName(fileName.getFileName().toString())
                     .position((i % 10) * 500, (i / 10) * 300);
             page1.addUseCase(classDescription);
@@ -70,8 +76,6 @@ class ReadClassesTest {
 
             ++i;
         }
-
-        page1.addElement(newProcess(200, 200));
 
         String xml = mxFileSerializer.generateXml(drawioFile.toMxFile());
         Files.writeString(Path.of(FILE_PATH), xml);

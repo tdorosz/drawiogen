@@ -1,32 +1,32 @@
 package com.tdorosz.drawiogen.drawio.xmlschema;
 
-import com.fasterxml.jackson.dataformat.xml.annotation.JacksonXmlProperty;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
+import jakarta.xml.bind.annotation.*;
 import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.experimental.Accessors;
 
 import java.util.Map;
 
 @Data
-@AllArgsConstructor
-@NoArgsConstructor
-@Builder
+@Accessors(fluent = true, chain = true)
+@XmlAccessorType(XmlAccessType.FIELD)
 public class ObjectWrapper {
-    @JacksonXmlProperty(isAttribute = true)
+
+    @XmlAnyAttribute
+    private Map<String, String> arguments;
+
+    @XmlAttribute
     private String id;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String placeholders;
 
-    @JacksonXmlProperty(isAttribute = true)
+    @XmlAttribute
     private String label;
 
-    @JacksonXmlProperty(isAttribute = true)
-    private Map<String, String> customParams;
+    @XmlAttribute
+    private String tooltip;
 
-    @JacksonXmlProperty(localName = "mxCell")
+    @XmlElement(name = "mxCell")
     private MxCell mxCell;
-
 
 }
