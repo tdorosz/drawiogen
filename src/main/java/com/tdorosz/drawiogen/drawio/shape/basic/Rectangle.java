@@ -7,7 +7,7 @@ import com.tdorosz.drawiogen.drawio.shape.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.util.DrawioStyleToStringStyle;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
-import com.tdorosz.drawiogen.drawio.xmlschema.ObjectWrapper;
+import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import lombok.extern.slf4j.Slf4j;
@@ -79,10 +79,10 @@ public class Rectangle implements DrawioShape<Rectangle> {
     }
 
     @Override
-    public ObjectWrapper toObjectWrapper() {
+    public MxObject toObjectWrapper() {
         MxCell mxCell = toMxCell().id(null).value(null);
 
-        return new ObjectWrapper()
+        return new MxObject()
                 .id(id)
                 .label(value)
                 .tooltip(tooltip)

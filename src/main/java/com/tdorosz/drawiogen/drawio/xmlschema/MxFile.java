@@ -26,5 +26,5 @@ public class MxFile {
     private String version;
 
     @XmlElement(name = "diagram")
-    private List<Diagram> diagrams;
+    private List<MxDiagram> diagrams;
 }

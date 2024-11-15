@@ -1,7 +1,7 @@
 package com.tdorosz.drawiogen.drawio.shape;
 
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
-import com.tdorosz.drawiogen.drawio.xmlschema.ObjectWrapper;
+import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 
 public interface DrawioShape<T> {
     MxCell toMxCell();
@@ -11,7 +11,7 @@ public interface DrawioShape<T> {
     T parent(String subCellId);
     String parent();
 
-    default ObjectWrapper toObjectWrapper() {
+    default MxObject toObjectWrapper() {
         return null;
     }
 

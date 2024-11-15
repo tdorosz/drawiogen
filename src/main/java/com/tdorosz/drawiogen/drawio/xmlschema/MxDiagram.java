@@ -9,7 +9,7 @@ import java.util.Map;
 @Data
 @Accessors(fluent = true, chain = true)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Diagram {
+public class MxDiagram {
 
     @XmlAnyAttribute
     private Map<String, String> arguments;

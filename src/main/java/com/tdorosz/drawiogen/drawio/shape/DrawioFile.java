@@ -1,6 +1,6 @@
 package com.tdorosz.drawiogen.drawio.shape;
 
-import com.tdorosz.drawiogen.drawio.xmlschema.Diagram;
+import com.tdorosz.drawiogen.drawio.xmlschema.MxDiagram;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxFile;
 
 import java.util.ArrayList;
@@ -16,7 +16,7 @@ public class DrawioFile {
     }
 
     public MxFile toMxFile() {
-        List<Diagram> diagrams = pages.stream()
+        List<MxDiagram> diagrams = pages.stream()
                 .map(DrawioPage::toDiagram)
                 .toList();
 

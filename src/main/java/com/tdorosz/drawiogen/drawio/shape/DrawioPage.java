@@ -27,8 +27,8 @@ public class DrawioPage {
         this.name = name;
     }
 
-    public Diagram toDiagram() {
-        List<ObjectWrapper> objectWrappers = elements.stream()
+    public MxDiagram toDiagram() {
+        List<MxObject> mxObjects = elements.stream()
                 .filter(DrawioShape::shouldMapToObjectWrapper)
                 .map(DrawioShape::toObjectWrapper)
                 .toList();
@@ -48,13 +48,13 @@ public class DrawioPage {
         List<MxCell> allCells = Stream.concat(standardCells.stream(), cells.stream()).toList();
 
 
-        return new Diagram()
+        return new MxDiagram()
                 .id(id)
                 .name(name)
                 .mxGraphModel(new MxGraphModel()
                         .pageHeight(pageHeight)
                         .pageWidth(pageWidth)
-                        .root(new Root().cells(allCells).objects(objectWrappers))
+                        .root(new MxRoot().cells(allCells).objects(mxObjects))
                 );
     }
 

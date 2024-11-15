@@ -13,7 +13,7 @@ import java.util.Map;
 @Data
 @Accessors(fluent = true, chain = true)
 @XmlAccessorType(XmlAccessType.FIELD)
-public class Root {
+public class MxRoot {
 
     @XmlAnyAttribute
     private Map<String, String> arguments;
@@ -22,5 +22,5 @@ public class Root {
     private List<MxCell> cells;
 
     @XmlElement(name = "object")
-    private List<ObjectWrapper> objects;
+    private List<MxObject> objects;
 }

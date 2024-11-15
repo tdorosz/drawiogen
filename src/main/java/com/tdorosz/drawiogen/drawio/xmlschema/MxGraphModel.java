@@ -21,5 +21,5 @@ public class MxGraphModel {
     private Integer pageHeight;
 
     @XmlElement(name = "root")
-    private Root root;
+    private MxRoot root;
 }
