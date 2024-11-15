@@ -1,7 +1,7 @@
 package com.tdorosz.drawiogen.component;
 
-import com.tdorosz.drawiogen.drawio.shape.BinaryState;
-import com.tdorosz.drawiogen.drawio.shape.DrawioColor;
+import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
+import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.shape.DrawioShape;
 import com.tdorosz.drawiogen.drawio.shape.basic.Rectangle;
 import lombok.Getter;

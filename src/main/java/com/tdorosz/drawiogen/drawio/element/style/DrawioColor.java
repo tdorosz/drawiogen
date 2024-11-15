@@ -1,4 +1,4 @@
-package com.tdorosz.drawiogen.drawio.shape;
+package com.tdorosz.drawiogen.drawio.element.style;
 
 public class DrawioColor extends java.awt.Color {
 

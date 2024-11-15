@@ -4,6 +4,8 @@ import jakarta.xml.bind.annotation.*;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import javax.xml.namespace.QName;
+import java.util.HashMap;
 import java.util.Map;
 
 @Data
@@ -12,7 +14,7 @@ import java.util.Map;
 public class MxObject {
 
     @XmlAnyAttribute
-    private Map<String, String> arguments;
+    private Map<QName, String> arguments;
 
     @XmlAttribute
     private String id;
@@ -28,5 +30,15 @@ public class MxObject {
 
     @XmlElement(name = "mxCell")
     private MxCell mxCell;
+
+    public MxObject arguments(Map<String, String> map) {
+        if (map == null) {
+            arguments = null;
+        } else {
+            arguments = new HashMap<>();
+            map.forEach((key, value) -> arguments.put(new QName(key), value));
+        }
+        return this;
+    }
 
 }

@@ -1,9 +1,9 @@
 package com.tdorosz.drawiogen.drawio.shape.basic;
 
-import com.tdorosz.drawiogen.drawio.shape.BinaryState;
-import com.tdorosz.drawiogen.drawio.shape.DrawioColor;
+import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
+import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
+import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.shape.DrawioShape;
-import com.tdorosz.drawiogen.drawio.shape.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.util.DrawioStyleToStringStyle;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;

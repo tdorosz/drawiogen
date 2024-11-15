@@ -14,10 +14,10 @@ public class MxGraphModel {
     @XmlAnyAttribute
     private Map<String, String> arguments;
 
-    @XmlAttribute(name = "host")
+    @XmlAttribute(name = "pageWidth")
     private Integer pageWidth;
 
-    @XmlAttribute(name = "host")
+    @XmlAttribute(name = "pageHeight")
     private Integer pageHeight;
 
     @XmlElement(name = "root")

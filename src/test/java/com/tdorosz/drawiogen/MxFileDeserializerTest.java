@@ -17,9 +17,8 @@ public class MxFileDeserializerTest {
     private static final String FILE_PATH = "D:\\projekty\\java\\drawiogen\\src\\test\\resources\\examples\\generated-3.xml";
     private static final String FILE_PATH_WRITE = "D:\\projekty\\java\\drawiogen\\src\\test\\resources\\examples\\generated-4.xml";
 
-
     private final MxFileDeserializer mxFileDeserializer = new MxFileDeserializer();
-    private final MxFileSerializer serializer= new MxFileSerializer();
+    private final MxFileSerializer serializer = new MxFileSerializer();
 
     @Test
     void shouldDeserializeMxFile() throws IOException, JAXBException {
@@ -38,7 +37,5 @@ public class MxFileDeserializerTest {
 
         Marshaller marshaller = context.createMarshaller();
         marshaller.marshal(mxFileReadJax, new File(FILE_PATH_WRITE));
-
-
     }
 }

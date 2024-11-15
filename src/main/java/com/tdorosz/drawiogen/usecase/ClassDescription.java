@@ -1,8 +1,8 @@
 package com.tdorosz.drawiogen.usecase;
 
 import com.tdorosz.drawiogen.component.ClassDetailsRenderer;
-import com.tdorosz.drawiogen.drawio.shape.BinaryState;
-import com.tdorosz.drawiogen.drawio.shape.DrawioColor;
+import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
+import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.formatter.DeaultLogLinesFormatter;
 import com.tdorosz.drawiogen.formatter.LogLinesFormatter;
 import lombok.Getter;
