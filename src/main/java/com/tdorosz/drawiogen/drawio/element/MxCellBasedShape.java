@@ -36,7 +36,7 @@ public class MxCellBasedShape<T extends MxCellBasedShape<T>> {
 
     @SuppressWarnings("unchecked")
     public T addStyle(String styleString) {
-        Rectangle.Style style = new Rectangle.Style(mxCell.style());
+        RectangleCell.Style style = new RectangleCell.Style(mxCell.style());
         mapStyleToObject(styleString, style);
         mxCell.style(style.toStyleString());
         return (T) this;

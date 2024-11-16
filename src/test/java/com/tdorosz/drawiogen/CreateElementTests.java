@@ -1,9 +1,11 @@
 package com.tdorosz.drawiogen;
 
 import com.tdorosz.drawiogen.drawio.element.Group;
-import com.tdorosz.drawiogen.drawio.element.Rectangle;
+import com.tdorosz.drawiogen.drawio.element.ProcessCell;
+import com.tdorosz.drawiogen.drawio.element.RectangleCell;
 import com.tdorosz.drawiogen.drawio.element.RootContainer;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
+import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileDeserializer;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileSerializer;
 import com.tdorosz.drawiogen.drawio.xmlschema.*;
@@ -29,7 +31,7 @@ public class CreateElementTests {
         RootContainer container = new RootContainer();
         Group group = new Group().parent(container.id());
 
-        Rectangle rectangle = Rectangle.createNew()
+        RectangleCell rectangle = RectangleCell.createNew()
                 .parent(group.id())
                 .value("test1")
                 .addAlternateBounds(300, 300)
@@ -37,7 +39,7 @@ public class CreateElementTests {
                 .collapsible(BinaryState.ON)
                 .styleEditCommit();
 
-        Rectangle rectangle2 = Rectangle.from(rectangle.mxCell());
+        RectangleCell rectangle2 = RectangleCell.from(rectangle.mxCell());
         rectangle2.styleEditBegin()
                 .html(BinaryState.ON)
                 .styleEditCommit();
@@ -47,13 +49,21 @@ public class CreateElementTests {
                 .sketch(BinaryState.ON)
                 .styleEditCommit();
 
+        ProcessCell process = ProcessCell.createNew()
+                .parent(group.id())
+                .value("Hello World")
+                .styleEditBegin()
+                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_TOMATO))
+                .strokeColor(DrawioColor.fromColor(DrawioColor.COLOR_SPRINGGREEN))
+                .styleEditCommit();
+
         MxFile test = new MxFile()
                 .diagrams(List.of(
                         new MxDiagram().name("test")
                                 .mxGraphModel(new MxGraphModel()
                                         .pageHeight(200).pageWidth(200)
                                         .root(new MxRoot()
-                                                .cells(List.of(container.getMxCell(), group.getMxCell(), rectangle2.mxCell()))
+                                                .cells(List.of(container.getMxCell(), group.getMxCell(), rectangle2.mxCell(), process.mxCell()))
                                                 .objects(List.of())
                                         ))
                 ));
@@ -73,7 +83,7 @@ public class CreateElementTests {
         MxCell mxCell = cells.stream()
                 .filter(cell -> cell.id().equals("07d90513-74b1-4ca4-ab84-c2dadc0fab5e")).findFirst().get();
 
-        Rectangle rectangle = Rectangle.from(mxCell);
+        RectangleCell rectangle = RectangleCell.from(mxCell);
         rectangle.styleEditBegin()
                 .glass(BinaryState.ON)
                 .rounded(null)

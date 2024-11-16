@@ -14,7 +14,7 @@ import java.util.UUID;
 
 import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 
-public class Rectangle extends MxCellBasedShape<Rectangle> {
+public class ProcessCell extends MxCellBasedShape<ProcessCell> {
 
     private static final String DEFAULT_STYLE = new Style()
             .html(BinaryState.ON)
@@ -22,21 +22,21 @@ public class Rectangle extends MxCellBasedShape<Rectangle> {
             .whiteSpace(WhiteSpace.WRAP)
             .toStyleString();
 
-    public static Rectangle createNew() {
+    public static ProcessCell createNew() {
         MxCell mxCell = new MxCell()
                 .id(UUID.randomUUID().toString())
                 .vertex("1")
                 .style(DEFAULT_STYLE)
                 .mxGeometry(createDefaultGeometry());
 
-        return new Rectangle(mxCell);
+        return new ProcessCell(mxCell);
     }
 
-    public static Rectangle from(MxCell mxCell) {
-        return new Rectangle(mxCell);
+    public static ProcessCell from(MxCell mxCell) {
+        return new ProcessCell(mxCell);
     }
 
-    private Rectangle(MxCell mxCell) {
+    private ProcessCell(MxCell mxCell) {
         super(mxCell);
     }
 
@@ -48,8 +48,9 @@ public class Rectangle extends MxCellBasedShape<Rectangle> {
     @Accessors(fluent = true, chain = true)
     public static class Style {
         @ToStringExclude
-        private final Rectangle parent;
+        private final ProcessCell parent;
 
+        private String shape = "process";
         private BinaryState editable;
         private BinaryState connectable;
         private BinaryState sketch;
@@ -70,7 +71,7 @@ public class Rectangle extends MxCellBasedShape<Rectangle> {
             this(null, style);
         }
 
-        public Style(Rectangle parent, String style) {
+        public Style(ProcessCell parent, String style) {
             this.parent = parent;
             mapStyleToObject(style, this);
         }
@@ -80,7 +81,7 @@ public class Rectangle extends MxCellBasedShape<Rectangle> {
                     .toString(this, DrawioStyleToStringStyle.getInstance());
         }
 
-        public Rectangle styleEditCommit() {
+        public ProcessCell styleEditCommit() {
             return parent.style(toStyleString());
         }
     }
