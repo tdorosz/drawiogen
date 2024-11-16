@@ -28,6 +28,8 @@ public class StyleMapper {
                         field.set(targetObject, DrawioColor.fromColor(java.awt.Color.decode(value)));
                     } else if (fieldType == WhiteSpace.class) {
                         field.set(targetObject, WhiteSpace.fromValue(value));
+                    } else if (fieldType == String.class) {
+                        field.set(targetObject, value);
                     } else {
                         log.warn("Unsupported field type: {}", fieldType);
                     }

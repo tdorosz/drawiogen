@@ -27,6 +27,9 @@ public class MxCell {
     private String vertex;
 
     @XmlAttribute
+    private String collapsed;
+
+    @XmlAttribute
     private String parent;
 
     @XmlAttribute

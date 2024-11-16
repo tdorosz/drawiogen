@@ -5,7 +5,6 @@ import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.util.DrawioStyleToStringStyle;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
-import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
 import lombok.Data;
 import lombok.experimental.Accessors;
 import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
@@ -15,55 +14,30 @@ import java.util.UUID;
 
 import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 
-public class Rectangle {
+public class Rectangle extends MxCellBasedShape<Rectangle> {
 
-    private final MxCell mxCell;
+    private static final String DEFAULT_STYLE = new Style()
+            .html(BinaryState.ON)
+            .rounded(BinaryState.OFF)
+            .whiteSpace(WhiteSpace.WRAP)
+            .toStyleString();
 
-    public Rectangle() {
-        mxCell = new MxCell()
+    public static Rectangle createNew() {
+        MxCell mxCell = new MxCell()
                 .id(UUID.randomUUID().toString())
                 .vertex("1")
-                .style(new Style()
-                        .html(BinaryState.ON)
-                        .rounded(BinaryState.OFF)
-                        .whiteSpace(WhiteSpace.WRAP)
-                        .toStyleString())
-                .mxGeometry(new MxGeometry()
-                        .x(0)
-                        .y(0)
-                        .width(100)
-                        .height(100)
-                        .as("geometry"));
+                .style(DEFAULT_STYLE)
+                .mxGeometry(createDefaultGeometry());
+
+        return new Rectangle(mxCell);
     }
 
-    public Rectangle(MxCell mxCell) {
-        this.mxCell = mxCell;
+    public static Rectangle from(MxCell mxCell) {
+        return new Rectangle(mxCell);
     }
 
-    public MxCell mxCell() {
-        return mxCell;
-    }
-
-    public Rectangle parent(String value) {
-        mxCell.parent(value);
-        return this;
-    }
-
-    public Rectangle value(String value) {
-        mxCell.value(value);
-        return this;
-    }
-
-    public Rectangle style(String style) {
-        mxCell.style(style);
-        return this;
-    }
-
-    public Rectangle addStyle(String styleString) {
-        Style style = new Style(mxCell.style());
-        mapStyleToObject(styleString, style);
-        mxCell.style(style.toStyleString());
-        return this;
+    private Rectangle(MxCell mxCell) {
+        super(mxCell);
     }
 
     public Style styleEditBegin() {
@@ -82,8 +56,9 @@ public class Rectangle {
         private BinaryState rounded;
         private BinaryState glass;
         private BinaryState shadow;
-        private WhiteSpace whiteSpace;
+        private BinaryState collapsible;
         private BinaryState html;
+        private WhiteSpace whiteSpace;
         private DrawioColor fillColor;
         private DrawioColor strokeColor;
 

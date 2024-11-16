@@ -28,9 +28,16 @@ public class CreateElementTests {
     void createRectangle() throws IOException {
         RootContainer container = new RootContainer();
         Group group = new Group().parent(container.id());
-        Rectangle rectangle = new Rectangle().parent(group.id()).value("test1");
-        ;
-        Rectangle rectangle2 = new Rectangle(rectangle.mxCell());
+
+        Rectangle rectangle = Rectangle.createNew()
+                .parent(group.id())
+                .value("test1")
+                .addAlternateBounds(300, 300)
+                .styleEditBegin()
+                .collapsible(BinaryState.ON)
+                .styleEditCommit();
+
+        Rectangle rectangle2 = Rectangle.from(rectangle.mxCell());
         rectangle2.styleEditBegin()
                 .html(BinaryState.ON)
                 .styleEditCommit();
@@ -66,7 +73,7 @@ public class CreateElementTests {
         MxCell mxCell = cells.stream()
                 .filter(cell -> cell.id().equals("07d90513-74b1-4ca4-ab84-c2dadc0fab5e")).findFirst().get();
 
-        Rectangle rectangle = new Rectangle(mxCell);
+        Rectangle rectangle = Rectangle.from(mxCell);
         rectangle.styleEditBegin()
                 .glass(BinaryState.ON)
                 .rounded(null)
