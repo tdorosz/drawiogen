@@ -46,6 +46,10 @@ public class Rectangle extends SimpleShape<Rectangle, Rectangle.Style> {
         return null;
     }
 
+    public static Rectangle createNew() {
+        return new Rectangle();
+    }
+
     @Override
     public Style styleEditBegin() {
         return new Style(this, mxCell.style());

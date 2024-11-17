@@ -1,21 +1,7 @@
 package com.tdorosz.drawiogen;
 
 import com.tdorosz.drawiogen.drawio.serialize.MxFileSerializer;
-import com.tdorosz.drawiogen.drawio.shape.DrawioFile;
-import com.tdorosz.drawiogen.drawio.shape.DrawioPage;
-import com.tdorosz.drawiogen.drawio.shape.basic.Arrow;
-import com.tdorosz.drawiogen.usecase.ClassDescription;
 import lombok.extern.slf4j.Slf4j;
-import org.junit.jupiter.api.Test;
-
-import java.io.IOException;
-import java.nio.file.*;
-import java.nio.file.attribute.BasicFileAttributes;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.regex.Pattern;
 
 @Slf4j
 class ReadClassesTest {

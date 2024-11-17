@@ -31,7 +31,6 @@ public class ClassDetailsRenderer implements Renderer {
     private final Rectangle tabInfo;
     private final Rectangle containerTopRight;
 
-
     public ClassDetailsRenderer() {
         root = new Rectangle()
                 .position(0, 0)
