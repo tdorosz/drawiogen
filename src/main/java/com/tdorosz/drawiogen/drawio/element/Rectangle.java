@@ -1,26 +1,16 @@
 package com.tdorosz.drawiogen.drawio.element;
 
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
-import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
-import com.tdorosz.drawiogen.drawio.util.DrawioStyleToStringStyle;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
-import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
-import com.tdorosz.drawiogen.drawio.xmlschema.MxRectangle;
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.experimental.Accessors;
-import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringExclude;
-
-import java.util.UUID;
 
 import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 
-public class Rectangle {
-
-    private final MxObject mxObject;
-    private final MxCell mxCell;
+public class Rectangle extends SimpleShape<Rectangle, Rectangle.Style> {
 
     private static final String DEFAULT_STYLE = new Style()
             .html(BinaryState.ON)
@@ -29,107 +19,34 @@ public class Rectangle {
             .toStyleString();
 
     public Rectangle(MxObject mxObject) {
-        this.mxObject = mxObject;
-        this.mxCell = mxObject.mxCell();
+        super(mxObject);
     }
 
     public Rectangle(MxCell mxCell) {
-        this.mxObject = null;
-        this.mxCell = mxCell;
+        super(mxCell);
     }
 
     public Rectangle() {
-        this.mxCell = new MxCell()
-                .vertex("1")
-                .style(DEFAULT_STYLE)
-                .mxGeometry(new MxGeometry()
-                        .x(0)
-                        .y(0)
-                        .width(100)
-                        .height(100)
-                        .as("geometry"));
-        this.mxObject = new MxObject()
-                .id(UUID.randomUUID().toString())
-                .mxCell(mxCell)
-                .label("");
+        super();
+        this.mxCell
+                .style(DEFAULT_STYLE);
     }
 
-    public MxObject mxObject() {
-        return mxObject;
-    }
-
-
-    public MxCell mxCell() {
-        return mxCell;
-    }
-
+    @Override
     public Style styleEditBegin() {
         return new Style(this, mxCell.style());
     }
 
-    private Rectangle style(String styleString) {
-        mxCell.style(styleString);
-        return this;
-    }
-
-    public boolean isMxObject() {
-        return mxObject != null;
-    }
-
-    public Rectangle parent(String id) {
-        mxCell.parent(id);
-        return this;
-    }
-
-    public Rectangle value(String val) {
-        if (isMxObject()) {
-            mxObject.label(val);
-        } else {
-            mxCell.value(val);
-        }
-        return this;
-    }
-
-    public Rectangle addAlternateBounds(int width, int height) {
-        MxRectangle alternateBounds = new MxRectangle()
-                .width(width)
-                .height(height)
-                .as("alternateBounds");
-        mxCell.mxGeometry().mxRectangle(alternateBounds);
-        return this;
-    }
-
-    public Rectangle addStyle(String styleString) {
-        Style style = new Style(mxCell.style());
-        mapStyleToObject(styleString, style);
-        style(style.toStyleString());
-        return this;
-    }
-
-    public Rectangle addStyle(Style newStyle) {
-        Style style = new Style(mxCell.style());
-        mapStyleToObject(newStyle.toStyleString(), style);
-        style(style.toStyleString());
-        return this;
-    }
-
     @Data
+    @EqualsAndHashCode(callSuper = true)
     @Accessors(fluent = true, chain = true)
-    public static class Style {
-        @ToStringExclude
-        private final Rectangle parent;
+    public static class Style extends BaseStyle<Rectangle, Style> {
 
-        private BinaryState editable;
         private BinaryState connectable;
-        private BinaryState sketch;
         private BinaryState rounded;
         private BinaryState glass;
-        private BinaryState shadow;
         private BinaryState collapsible;
-        private BinaryState html;
         private WhiteSpace whiteSpace;
-        private DrawioColor fillColor;
-        private DrawioColor strokeColor;
 
         public Style() {
             this("");
@@ -144,13 +61,5 @@ public class Rectangle {
             mapStyleToObject(style, this);
         }
 
-        public String toStyleString() {
-            return ReflectionToStringBuilder
-                    .toString(this, DrawioStyleToStringStyle.getInstance());
-        }
-
-        public Rectangle styleEditCommit() {
-            return parent.style(toStyleString());
-        }
     }
 }

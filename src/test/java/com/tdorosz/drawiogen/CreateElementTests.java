@@ -1,6 +1,8 @@
 package com.tdorosz.drawiogen;
 
-import com.tdorosz.drawiogen.drawio.element.*;
+import com.tdorosz.drawiogen.drawio.element.Group;
+import com.tdorosz.drawiogen.drawio.element.Rectangle;
+import com.tdorosz.drawiogen.drawio.element.RootContainer;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileDeserializer;
@@ -30,15 +32,18 @@ public class CreateElementTests {
 
         Rectangle rectangle = new Rectangle()
                 .parent(group.id())
-                .value("test1")
+                .value("test1 - val2")
                 .addAlternateBounds(100, 20)
                 .styleEditBegin()
                 .collapsible(BinaryState.ON)
                 .styleEditCommit();
 
         rectangle.styleEditBegin()
+                .html(BinaryState.ON)
                 .rounded(BinaryState.ON)
                 .sketch(BinaryState.ON)
+                .editable(BinaryState.OFF)
+                .movable(BinaryState.ON)
                 .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_POWDERBLUE))
                 .styleEditCommit();
 
@@ -48,8 +53,8 @@ public class CreateElementTests {
                                 .mxGraphModel(new MxGraphModel()
                                         .pageHeight(200).pageWidth(200)
                                         .root(new MxRoot()
-                                                .cells(List.of(container.getMxCell(), group.getMxCell()))
-                                                .objects(List.of(rectangle.mxObject()))
+                                                .cells(List.of(container.getMxCell(), group.getMxCell(), rectangle.mxCell()))
+                                                .objects(List.of())
                                         ))
                 ));
 
