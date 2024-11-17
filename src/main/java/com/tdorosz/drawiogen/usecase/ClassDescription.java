@@ -17,47 +17,47 @@ public class ClassDescription implements UseCase {
     private final List<String> logLines = new ArrayList<>();
 
     private LogLinesFormatter logLinesFormatter = new DeaultLogLinesFormatter();
-
-    public ClassDescription() {
-        renderer.getBottomRightRectangle()
-                .value("Logs")
-                .style()
-                .editable(BinaryState.OFF)
-                .styleEnd();
-    }
-
-    public ClassDescription addLogLines(List<String> logLines) {
-        this.logLines.addAll(logLines);
-        updateLogs();
-        return this;
-    }
-
-    public ClassDescription classFullName(String classFullName) {
-        this.renderer.getParent().value(classFullName);
-        if (classFullName.matches(".*Test.java")) {
-            this.renderer.getTabInfo().value("Test")
-                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_YELLOW));
-        } else if (classFullName.matches(".*[Dd]rawio.*")) {
-            this.renderer.getTabInfo().value("Drawio")
-                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_TEAL));
-        }
-        return this;
-    }
-
-    private void updateLogs() {
-        String logsTooltipText = logLinesFormatter.format(logLines);
-        renderer.getBottomRightRectangle()
-                .tooltip(logsTooltipText)
-                .value("Logs: %s".formatted(logLines.size()));
-    }
-
-    public void position(int x, int y) {
-        renderer.getParent()
-                .x(x)
-                .y(y);
-    }
-
-    public String id() {
-        return renderer.getParent().id();
-    }
+//
+//    public ClassDescription() {
+//        renderer.getBottomRightRectangle()
+//                .value("Logs")
+//                .style()
+//                .editable(BinaryState.OFF)
+//                .styleEnd();
+//    }
+//
+//    public ClassDescription addLogLines(List<String> logLines) {
+//        this.logLines.addAll(logLines);
+//        updateLogs();
+//        return this;
+//    }
+//
+//    public ClassDescription classFullName(String classFullName) {
+//        this.renderer.getParent().value(classFullName);
+//        if (classFullName.matches(".*Test.java")) {
+//            this.renderer.getTabInfo().value("Test")
+//                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_YELLOW));
+//        } else if (classFullName.matches(".*[Dd]rawio.*")) {
+//            this.renderer.getTabInfo().value("Drawio")
+//                    .style().fillColor(DrawioColor.fromColor(DrawioColor.COLOR_TEAL));
+//        }
+//        return this;
+//    }
+//
+//    private void updateLogs() {
+//        String logsTooltipText = logLinesFormatter.format(logLines);
+//        renderer.getBottomRightRectangle()
+//                .tooltip(logsTooltipText)
+//                .value("Logs: %s".formatted(logLines.size()));
+//    }
+//
+//    public void position(int x, int y) {
+//        renderer.getParent()
+//                .x(x)
+//                .y(y);
+//    }
+//
+//    public String id() {
+//        return renderer.getParent().id();
+//    }
 }

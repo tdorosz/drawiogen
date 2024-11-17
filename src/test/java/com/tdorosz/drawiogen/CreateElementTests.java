@@ -1,9 +1,6 @@
 package com.tdorosz.drawiogen;
 
-import com.tdorosz.drawiogen.drawio.element.Group;
-import com.tdorosz.drawiogen.drawio.element.RectangleCell;
-import com.tdorosz.drawiogen.drawio.element.RectangleObject;
-import com.tdorosz.drawiogen.drawio.element.RootContainer;
+import com.tdorosz.drawiogen.drawio.element.*;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileDeserializer;
@@ -31,29 +28,18 @@ public class CreateElementTests {
         RootContainer container = new RootContainer();
         Group group = new Group().parent(container.id());
 
-        RectangleCell rectangle = RectangleCell.createNew()
+        Rectangle rectangle = new Rectangle()
                 .parent(group.id())
                 .value("test1")
-                .addAlternateBounds(300, 300)
+                .addAlternateBounds(100, 20)
                 .styleEditBegin()
                 .collapsible(BinaryState.ON)
                 .styleEditCommit();
 
-        RectangleCell rectangle2 = RectangleCell.from(rectangle.mxCell());
-        rectangle2.styleEditBegin()
-                .html(BinaryState.ON)
-                .styleEditCommit();
-
-        rectangle.addStyle("html=0").styleEditBegin()
+        rectangle.styleEditBegin()
                 .rounded(BinaryState.ON)
                 .sketch(BinaryState.ON)
-                .styleEditCommit();
-
-        RectangleObject rectangleObject = RectangleObject.createNew()
-                .parent(group.id())
-                .styleEditBegin()
-                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_SANDYBROWN))
-                .glass(BinaryState.ON)
+                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_POWDERBLUE))
                 .styleEditCommit();
 
         MxFile test = new MxFile()
@@ -63,7 +49,7 @@ public class CreateElementTests {
                                         .pageHeight(200).pageWidth(200)
                                         .root(new MxRoot()
                                                 .cells(List.of(container.getMxCell(), group.getMxCell()))
-                                                .objects(List.of(rectangleObject.mxObject()))
+                                                .objects(List.of(rectangle.mxObject()))
                                         ))
                 ));
 
@@ -77,14 +63,17 @@ public class CreateElementTests {
     void updateRectangle() throws IOException {
         MxFile mxFile = mxFileDeserializer.readXml(Files.readString(Path.of(FILE_PATH)));
 
-        List<MxCell> cells = mxFile.diagrams().get(0).mxGraphModel().root().cells();
-        MxCell mxCell = cells.stream()
-                .filter(cell -> cell.id().equals("07d90513-74b1-4ca4-ab84-c2dadc0fab5e")).findFirst().get();
+        List<MxObject> cells = mxFile.diagrams().get(0).mxGraphModel().root().objects();
+        MxObject element = cells.stream()
+                .filter(cell -> cell.id().equals("82822cd3-f28f-4cb4-8339-95ded7f36d62")).findFirst().get();
 
-        RectangleCell rectangle = RectangleCell.from(mxCell);
-        rectangle.styleEditBegin()
+        Rectangle rectangle = new Rectangle(element);
+        rectangle
+                .value("Hello Test")
+                .styleEditBegin()
                 .glass(BinaryState.ON)
-                .rounded(null)
+                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_RED))
+                .rounded(BinaryState.ON)
                 .styleEditCommit();
 
         String xml = serializer.generateXml(mxFile);
@@ -93,4 +82,5 @@ public class CreateElementTests {
 
         Files.writeString(Path.of(FILE_PATH_OUT), xml);
     }
+
 }
