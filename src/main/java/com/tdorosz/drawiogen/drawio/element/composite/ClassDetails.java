@@ -1,6 +1,7 @@
-package com.tdorosz.drawiogen.component;
+package com.tdorosz.drawiogen.drawio.element.composite;
 
 import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
+import com.tdorosz.drawiogen.drawio.element.DrawioElementModelProvider;
 import com.tdorosz.drawiogen.drawio.element.simple.Rectangle;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
@@ -9,7 +10,7 @@ import lombok.Getter;
 import java.util.List;
 
 @Getter
-public class ClassDetailsRenderer implements Renderer {
+public class ClassDetails implements DrawioElementModelProvider<ClassDetails> {
 
     private static final int PARENT_WIDTH = 300;
     private static final int PARENT_HEIGHT = 100;
@@ -22,8 +23,18 @@ public class ClassDetailsRenderer implements Renderer {
     private static final int CONTAINER_TOP_RIGHT_HEIGHT = 20;
 
     @Override
-    public List<DrawioElementModel> getModel() {
-        return List.of(root.toModel(), bottomRightRectangle.toModel(), tabInfo.toModel());
+    public ClassDetails parent(String id) {
+        root.parent(id);
+        return this;
+    }
+
+    @Override
+    public DrawioElementModel getDrawioElementModel() {
+        return new DrawioElementModel(root.id(),
+                List.of(root.getDrawioElementModel(),
+                        bottomRightRectangle.getDrawioElementModel(),
+                        tabInfo.getDrawioElementModel(),
+                        containerTopRight.getDrawioElementModel()));
     }
 
     private final Rectangle root;
@@ -31,7 +42,7 @@ public class ClassDetailsRenderer implements Renderer {
     private final Rectangle tabInfo;
     private final Rectangle containerTopRight;
 
-    public ClassDetailsRenderer() {
+    public ClassDetails() {
         root = new Rectangle()
                 .position(0, 0)
                 .size(PARENT_WIDTH, PARENT_HEIGHT)
@@ -63,8 +74,4 @@ public class ClassDetailsRenderer implements Renderer {
                 .height(TAB_INFO_HEIGHT);
     }
 
-    @Override
-    public void parentId(String id) {
-        root.parent(id);
-    }
 }

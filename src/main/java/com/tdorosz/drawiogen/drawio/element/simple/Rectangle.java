@@ -35,11 +35,11 @@ public class Rectangle extends SimpleShape<Rectangle, Rectangle.Style> {
     }
 
     public static Rectangle from(DrawioElementModel model) {
-        MxCell cell = model.cellById(model.id());
+        MxCell cell = model.cellById(model.rootId());
         if (cell != null) {
             return new Rectangle(cell);
         }
-        MxObject object = model.objectById(model.id());
+        MxObject object = model.objectById(model.rootId());
         if (object != null) {
             return new Rectangle(object);
         }

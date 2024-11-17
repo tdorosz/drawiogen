@@ -11,14 +11,24 @@ import java.util.List;
 @Data
 @Accessors(fluent = true, chain = true)
 public class DrawioElementModel {
-    private final String id;
+    private final String rootId;
     private final List<MxCell> mxCells;
     private final List<MxObject> mxObjects;
 
     public DrawioElementModel(String id, List<MxCell> mxCells, List<MxObject> mxObjects) {
-        this.id = id;
+        this.rootId = id;
         this.mxCells = new ArrayList<>(mxCells);
         this.mxObjects = new ArrayList<>(mxObjects);
+    }
+
+    public DrawioElementModel(String id, List<DrawioElementModel> models) {
+        this.rootId = id;
+        this.mxCells = new ArrayList<>();
+        this.mxObjects = new ArrayList<>();
+        for (DrawioElementModel model : models) {
+            mxCells.addAll(model.mxCells());
+            mxObjects.addAll(model.mxObjects);
+        }
     }
 
     public MxCell cellById(String id) {

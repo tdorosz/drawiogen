@@ -1,6 +1,5 @@
 package com.tdorosz.drawiogen;
 
-import com.tdorosz.drawiogen.component.ClassDetailsRenderer;
 import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
 import com.tdorosz.drawiogen.drawio.element.DrawioPage;
 import com.tdorosz.drawiogen.drawio.element.Group;
@@ -11,6 +10,7 @@ import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileDeserializer;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileSerializer;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxFile;
+import com.tdorosz.drawiogen.usecase.ClassDescription;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.jupiter.api.Test;
 
@@ -86,9 +86,17 @@ public class CreateElementTests {
                 .enumerate(BinaryState.OFF)
                 .styleEditCommit();
 
-        ClassDetailsRenderer classDetails = new ClassDetailsRenderer();
+        ClassDescription classDescription = new ClassDescription();
+        classDescription.addLogLines(List.of(
+                "log.error(...)",
+                "log.error(...)",
+                "log.error(...)",
+                "log.error(...)",
+                "log.error(...)"
+        ));
+        classDescription.classFullName("MyTest.java");
 
-        drawioPage.addElement(classDetails);
+        drawioPage.addElement(classDescription);
 
         String xml = serializer.generateXml(mxFile);
 

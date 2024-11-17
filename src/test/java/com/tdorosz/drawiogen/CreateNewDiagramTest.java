@@ -1,8 +1,8 @@
 package com.tdorosz.drawiogen;
 
-import com.tdorosz.drawiogen.component.ClassDetailsRenderer;
 import com.tdorosz.drawiogen.drawio.element.DrawioFile;
 import com.tdorosz.drawiogen.drawio.element.DrawioPage;
+import com.tdorosz.drawiogen.drawio.element.composite.ClassDetails;
 import com.tdorosz.drawiogen.drawio.element.simple.Rectangle;
 import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import com.tdorosz.drawiogen.drawio.serialize.MxFileDeserializer;
@@ -41,9 +41,9 @@ public class CreateNewDiagramTest {
         page.addElement(rectangle1);
         page.addElement(rectangle2);
 
-        ClassDetailsRenderer classDetailsRenderer = new ClassDetailsRenderer();
+        ClassDetails classDetails = new ClassDetails();
 
-        page.addElement(classDetailsRenderer);
+        page.addElement(classDetails);
 
         String xml = serializer.generateXml(file.mxFile());
         log.info(xml);

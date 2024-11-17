@@ -1,7 +1,5 @@
 package com.tdorosz.drawiogen.drawio.element;
 
-import com.tdorosz.drawiogen.component.Renderer;
-import com.tdorosz.drawiogen.drawio.element.simple.SimpleShape;
 import com.tdorosz.drawiogen.drawio.xmlschema.*;
 import lombok.extern.slf4j.Slf4j;
 
@@ -67,26 +65,11 @@ public class DrawioPage {
         return mxDiagram.mxGraphModel().root();
     }
 
-    public DrawioPage addElement(SimpleShape<?, ?> simpleShape) {
-        if (simpleShape.isMxObject()) {
-            mxRoot().objects().add(simpleShape.mxObject());
-        } else {
-            mxRoot().cells().add(simpleShape.mxCell());
-        }
-        simpleShape.parent(mainGroup.id());
-        return this;
-    }
-
-    public DrawioPage addElement(Renderer renderer) {
-        renderer.parentId(mainGroup.id());
-
-        List<DrawioElementModel> models = renderer.getModel();
-
-        for (DrawioElementModel drawioElementModel : models) {
-            mxRoot().cells().addAll(drawioElementModel.mxCells());
-            mxRoot().objects().addAll(drawioElementModel.mxObjects());
-        }
-
+    public DrawioPage addElement(DrawioElementModelProvider<?> modelProvider) {
+        modelProvider.parent(mainGroup.id());
+        DrawioElementModel drawioElementModel = modelProvider.getDrawioElementModel();
+        mxRoot().objects().addAll(drawioElementModel.mxObjects());
+        mxRoot().cells().addAll(drawioElementModel.mxCells());
         return this;
     }
 
