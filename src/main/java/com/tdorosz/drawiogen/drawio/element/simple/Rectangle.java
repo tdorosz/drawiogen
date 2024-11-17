@@ -1,6 +1,7 @@
 package com.tdorosz.drawiogen.drawio.element.simple;
 
 import com.tdorosz.drawiogen.drawio.element.BaseStyle;
+import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
@@ -31,6 +32,18 @@ public class Rectangle extends SimpleShape<Rectangle, Rectangle.Style> {
         super();
         this.mxCell
                 .style(DEFAULT_STYLE);
+    }
+
+    public static Rectangle from(DrawioElementModel model) {
+        MxCell cell = model.cellById(model.id());
+        if (cell != null) {
+            return new Rectangle(cell);
+        }
+        MxObject object = model.objectById(model.id());
+        if (object != null) {
+            return new Rectangle(object);
+        }
+        return null;
     }
 
     @Override

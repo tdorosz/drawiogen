@@ -22,4 +22,9 @@ public class Group {
     public String id() {
         return mxCell.id();
     }
+
+    public Group id(String id) {
+        mxCell.id(id);
+        return this;
+    }
 }

@@ -13,6 +13,10 @@ public class RootContainer {
         mxCell = new MxCell().id(UUID.randomUUID().toString());
     }
 
+    public RootContainer(String id) {
+        mxCell = new MxCell().id(id);
+    }
+
     public String id() {
         return mxCell.id();
     }

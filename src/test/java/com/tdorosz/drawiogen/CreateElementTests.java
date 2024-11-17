@@ -1,5 +1,7 @@
 package com.tdorosz.drawiogen;
 
+import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
+import com.tdorosz.drawiogen.drawio.element.DrawioPage;
 import com.tdorosz.drawiogen.drawio.element.Group;
 import com.tdorosz.drawiogen.drawio.element.simple.Rectangle;
 import com.tdorosz.drawiogen.drawio.element.RootContainer;
@@ -51,16 +53,11 @@ public class CreateElementTests {
                 .rounded(BinaryState.ON)
                 .styleEditCommit();
 
-        MxFile test = new MxFile()
-                .diagrams(List.of(
-                        new MxDiagram().name("test")
-                                .mxGraphModel(new MxGraphModel()
-                                        .pageHeight(200).pageWidth(200)
-                                        .root(new MxRoot()
-                                                .cells(List.of(container.getMxCell(), group.getMxCell(), group2.getMxCell(), rectangle.mxCell()))
-                                                .objects(List.of())
-                                        ))
-                ));
+        DrawioPage drawioPage = DrawioPage.createPage("First!")
+                .pageSize(500, 500)
+                .addElement(rectangle);
+
+        MxFile test = new MxFile().diagrams(List.of(drawioPage.mxDiagram()));
 
         String xml = serializer.generateXml(test);
         log.info(xml);
@@ -72,17 +69,20 @@ public class CreateElementTests {
     void updateRectangle() throws IOException {
         MxFile mxFile = mxFileDeserializer.readXml(Files.readString(Path.of(FILE_PATH)));
 
-        List<MxObject> cells = mxFile.diagrams().get(0).mxGraphModel().root().objects();
-        MxObject element = cells.stream()
-                .filter(cell -> cell.id().equals("82822cd3-f28f-4cb4-8339-95ded7f36d62")).findFirst().get();
+        DrawioPage drawioPage = new DrawioPage(mxFile.diagrams().get(0));
 
-        Rectangle rectangle = new Rectangle(element);
+        DrawioElementModel element = drawioPage.getElementById("dba40ca8-17e8-4246-bfee-6d77e139c4a3");
+
+        Rectangle rectangle = Rectangle.from(element);
+
         rectangle
                 .value("Hello Test")
                 .styleEditBegin()
                 .glass(BinaryState.ON)
                 .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_RED))
                 .rounded(BinaryState.ON)
+                .enumerateValue("Hi")
+                .enumerate(BinaryState.OFF)
                 .styleEditCommit();
 
         String xml = serializer.generateXml(mxFile);
