@@ -1,8 +1,6 @@
 package com.tdorosz.drawiogen.drawio.shape;
 
-import com.tdorosz.drawiogen.component.Renderer;
 import com.tdorosz.drawiogen.drawio.xmlschema.*;
-import com.tdorosz.drawiogen.usecase.UseCase;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,14 +69,14 @@ public class DrawioPage {
         return element;
     }
 
-    public void addUseCase(UseCase useCase) {
-        Renderer renderer = useCase.getRenderer();
-        List<DrawioShape<?>> shapes = renderer.getShapes();
-        for (DrawioShape<?> shape : shapes) {
-            if (shape.parent() == null) {
-                shape.parent(subCellId);
-            }
-        }
-        elements.addAll(shapes);
-    }
+//    public void addUseCase(UseCase useCase) {
+//        Renderer renderer = useCase.getRenderer();
+//        List<DrawioShape<?>> shapes = renderer.getShapes();
+//        for (DrawioShape<?> shape : shapes) {
+//            if (shape.parent() == null) {
+//                shape.parent(subCellId);
+//            }
+//        }
+//        elements.addAll(shapes);
+//    }
 }

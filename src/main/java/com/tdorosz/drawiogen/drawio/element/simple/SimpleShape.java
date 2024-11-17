@@ -1,13 +1,16 @@
 package com.tdorosz.drawiogen.drawio.element.simple;
 
 import com.tdorosz.drawiogen.drawio.element.BaseStyle;
+import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
 import com.tdorosz.drawiogen.drawio.element.Stylable;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxRectangle;
 
+import java.util.Objects;
 import java.util.UUID;
+import java.util.stream.Stream;
 
 import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 
@@ -83,6 +86,13 @@ public abstract class SimpleShape<T extends SimpleShape<T, S>, S extends BaseSty
         return mxObject != null;
     }
 
+    public String id() {
+        if (isMxObject()) {
+            return mxObject.id();
+        }
+        return mxCell.id();
+    }
+
     @SuppressWarnings("unchecked")
     public T value(String val) {
         if (isMxObject()) {
@@ -91,5 +101,43 @@ public abstract class SimpleShape<T extends SimpleShape<T, S>, S extends BaseSty
             mxCell.value(val);
         }
         return (T) this;
+    }
+
+    public T position(Integer x, Integer y) {
+        mxCell.mxGeometry().x(x).y(y);
+        return (T) this;
+    }
+
+    public T size(Integer widht, Integer height) {
+        mxCell.mxGeometry().width(widht).height(height);
+        return (T) this;
+    }
+
+    public T x(Integer value) {
+        mxCell.mxGeometry().x(value);
+        return (T) this;
+    }
+
+    public T y(Integer value) {
+        mxCell.mxGeometry().x(value);
+        return (T) this;
+    }
+
+    public T width(Integer value) {
+        mxCell.mxGeometry().width(value);
+        return (T) this;
+    }
+
+    public T height(Integer value) {
+        mxCell.mxGeometry().height(value);
+        return (T) this;
+    }
+
+    public DrawioElementModel toModel() {
+        return new DrawioElementModel(
+                id(),
+                Stream.of(mxCell).filter(Objects::nonNull).toList(),
+                Stream.of(mxObject).filter(Objects::nonNull).toList()
+        );
     }
 }

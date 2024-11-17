@@ -1,6 +1,9 @@
 package com.tdorosz.drawiogen.component;
 
-import com.tdorosz.drawiogen.drawio.shape.DrawioShape;
+import com.tdorosz.drawiogen.drawio.element.DrawioElementModel;
+import com.tdorosz.drawiogen.drawio.element.simple.Rectangle;
+import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
+import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
 import lombok.Getter;
 
 import java.util.List;
@@ -19,47 +22,50 @@ public class ClassDetailsRenderer implements Renderer {
     private static final int CONTAINER_TOP_RIGHT_HEIGHT = 20;
 
     @Override
-    public List<DrawioShape<?>> getShapes() {
-        return null;
+    public List<DrawioElementModel> getModel() {
+        return List.of(root.toModel(), bottomRightRectangle.toModel(), tabInfo.toModel());
     }
 
-    //    private final Rectangle parent;
-//    private final Rectangle bottomRightRectangle;
-//    private final Rectangle tabInfo;
-//    private final Rectangle containerTopRight;
-//
-//    public ClassDetailsRenderer() {
-//        parent = Rectangle.newRectangle(0, 0)
-//                .width(PARENT_WIDTH)
-//                .height(PARENT_HEIGHT)
-//                .style()
-//                .styleEnd();
-//
-//        bottomRightRectangle = Rectangle.newRectangle(PARENT_WIDTH - BOTTOM_RIGHT_INFO_WIDTH, PARENT_HEIGHT - BOTTOM_RIGHT_INFO_HEIGHT)
-//                .parent(parent.id())
-//                .width(BOTTOM_RIGHT_INFO_WIDTH)
-//                .height(BOTTOM_RIGHT_INFO_HEIGHT)
-//                .style()
-//                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_ORANGERED))
-//                .editable(BinaryState.OFF)
-//                .connectable(BinaryState.OFF)
-//                .styleEnd();
-//
-//        tabInfo = Rectangle.newRectangle(0, -TAB_INFO_HEIGHT)
-//                .parent(parent.id())
-//                .width(TAB_INFO_WIDTH)
-//                .height(TAB_INFO_HEIGHT);
-//
-//        containerTopRight = Rectangle.newRectangle(PARENT_WIDTH - CONTAINER_TOP_RIGHT_WIDTH, 0)
-//                .parent(parent.id())
-//                .width(CONTAINER_TOP_RIGHT_WIDTH)
-//                .height(TAB_INFO_HEIGHT);
-//    }
-//
-//    public List<DrawioShape<?>> getShapes() {
-//        return Stream.<DrawioShape<?>>of(parent, bottomRightRectangle, tabInfo, containerTopRight)
-//                .filter(DrawioShape::shouldAdd)
-//                .toList();
-//    }
+    private final Rectangle root;
+    private final Rectangle bottomRightRectangle;
+    private final Rectangle tabInfo;
+    private final Rectangle containerTopRight;
 
+
+    public ClassDetailsRenderer() {
+        root = new Rectangle()
+                .position(0, 0)
+                .size(PARENT_WIDTH, PARENT_HEIGHT)
+                .styleEditBegin()
+                .styleEditCommit();
+
+        bottomRightRectangle = new Rectangle()
+                .position(PARENT_WIDTH - BOTTOM_RIGHT_INFO_WIDTH, PARENT_HEIGHT - BOTTOM_RIGHT_INFO_HEIGHT)
+                .parent(root.id())
+                .width(BOTTOM_RIGHT_INFO_WIDTH)
+                .height(BOTTOM_RIGHT_INFO_HEIGHT)
+                .styleEditBegin()
+                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_ORANGERED))
+                .editable(BinaryState.OFF)
+                .connectable(BinaryState.OFF)
+                .movable(BinaryState.OFF)
+                .styleEditCommit();
+
+        tabInfo = new Rectangle()
+                .position(0, -TAB_INFO_HEIGHT)
+                .parent(root.id())
+                .width(TAB_INFO_WIDTH)
+                .height(TAB_INFO_HEIGHT);
+
+        containerTopRight = new Rectangle()
+                .position(PARENT_WIDTH - CONTAINER_TOP_RIGHT_WIDTH, 0)
+                .parent(root.id())
+                .width(CONTAINER_TOP_RIGHT_WIDTH)
+                .height(TAB_INFO_HEIGHT);
+    }
+
+    @Override
+    public void parentId(String id) {
+        root.parent(id);
+    }
 }

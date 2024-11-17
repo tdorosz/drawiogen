@@ -7,6 +7,7 @@ import jakarta.xml.bind.annotation.XmlElement;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -19,8 +20,8 @@ public class MxRoot {
     private Map<String, String> arguments;
 
     @XmlElement(name = "mxCell")
-    private List<MxCell> cells;
+    private List<MxCell> cells = new ArrayList<>();
 
     @XmlElement(name = "object")
-    private List<MxObject> objects;
+    private List<MxObject> objects = new ArrayList<>();
 }
