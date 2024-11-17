@@ -1,5 +1,6 @@
-package com.tdorosz.drawiogen.drawio.element;
+package com.tdorosz.drawiogen.drawio.element.simple;
 
+import com.tdorosz.drawiogen.drawio.element.BaseStyle;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;

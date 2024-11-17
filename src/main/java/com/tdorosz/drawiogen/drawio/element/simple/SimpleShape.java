@@ -1,5 +1,7 @@
-package com.tdorosz.drawiogen.drawio.element;
+package com.tdorosz.drawiogen.drawio.element.simple;
 
+import com.tdorosz.drawiogen.drawio.element.BaseStyle;
+import com.tdorosz.drawiogen.drawio.element.Stylable;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;

@@ -111,7 +111,6 @@ public abstract class BaseStyle<T extends Stylable<T>, S extends BaseStyle<T, S>
         return (S) this;
     }
 
-
     public DrawioColor fillColor() {
         return fillColor;
     }
