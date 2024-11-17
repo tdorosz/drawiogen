@@ -7,6 +7,9 @@ import org.apache.commons.lang3.builder.ReflectionToStringBuilder;
 import org.apache.commons.lang3.builder.ToStringExclude;
 
 import java.awt.*;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 
 
 public abstract class BaseStyle<T extends Stylable<T>, S extends BaseStyle<T, S>> {
@@ -21,6 +24,8 @@ public abstract class BaseStyle<T extends Stylable<T>, S extends BaseStyle<T, S>
     private DrawioColor strokeColor;
     private BinaryState sketch;
     private BinaryState shadow;
+    private BinaryState enumerate;
+    private String enumerateValue;
 
     public String toStyleString() {
         return ReflectionToStringBuilder
@@ -80,6 +85,32 @@ public abstract class BaseStyle<T extends Stylable<T>, S extends BaseStyle<T, S>
         this.shadow = shadow;
         return (S) this;
     }
+
+    public BinaryState enumerate() {
+        return enumerate;
+    }
+
+    @SuppressWarnings("unchecked")
+    public S enumerate(BinaryState enumerate) {
+        this.enumerate = enumerate;
+        return (S) this;
+    }
+
+    public String enumerateValue() {
+        if (enumerateValue == null) {
+            return null;
+        }
+
+        return URLDecoder.decode(enumerateValue, StandardCharsets.UTF_8);
+    }
+
+    @SuppressWarnings("unchecked")
+    public S enumerateValue(String enumerateValue) {
+        this.enumerateValue = URLEncoder.encode(enumerateValue, StandardCharsets.UTF_8)
+                .replaceAll("\\+", "%20");
+        return (S) this;
+    }
+
 
     public DrawioColor fillColor() {
         return fillColor;

@@ -6,6 +6,9 @@ import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import lombok.extern.slf4j.Slf4j;
 
 import java.lang.reflect.Field;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Map;
 
 @Slf4j
@@ -13,7 +16,14 @@ public class StyleMapper {
 
     public static <T> T mapStyleToObject(String style, T targetObject) {
         Map<String, String> styleMap = StyleParser.parse(style);
-        Field[] fields = targetObject.getClass().getDeclaredFields();
+        List<Field> fields = new ArrayList<>();
+
+        Class<?> clazz = targetObject.getClass();
+        while (clazz != null) {
+            Collections.addAll(fields, clazz.getDeclaredFields());
+            clazz = clazz.getSuperclass();
+        }
+
         for (Field field : fields) {
             String key = field.getName();
 

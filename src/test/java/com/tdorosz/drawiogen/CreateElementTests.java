@@ -42,9 +42,11 @@ public class CreateElementTests {
                 .html(BinaryState.ON)
                 .rounded(BinaryState.ON)
                 .sketch(BinaryState.ON)
-                .editable(BinaryState.OFF)
+                .editable(BinaryState.ON)
                 .movable(BinaryState.ON)
-                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_POWDERBLUE))
+                .fillColor(DrawioColor.COLOR_POWDERBLUE)
+                .enumerate(BinaryState.ON)
+                .enumerateValue("No way=10;20;20")
                 .styleEditCommit();
 
         MxFile test = new MxFile()
