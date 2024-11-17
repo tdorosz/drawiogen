@@ -2,40 +2,45 @@ package com.tdorosz.drawiogen.drawio.element;
 
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxGeometry;
+import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxRectangle;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class MxCellBasedShape<T extends MxCellBasedShape<T>> implements Stylable<T> {
+public class MxObjectBasedShape<T extends MxObjectBasedShape<T>> implements Stylable<T> {
 
-    protected final MxCell mxCell;
+    protected final MxObject mxObject;
+
+    public MxObject mxObject() {
+        return mxObject;
+    }
 
     public MxCell mxCell() {
-        return mxCell;
+        return mxObject.mxCell();
     }
 
     @SuppressWarnings("unchecked")
     public T parent(String value) {
-        mxCell.parent(value);
+        mxCell().parent(value);
         return (T) this;
     }
 
     @SuppressWarnings("unchecked")
-    public T value(String value) {
-        mxCell.value(value);
+    public T label(String value) {
+        mxObject.label(value);
         return (T) this;
     }
 
     @SuppressWarnings("unchecked")
     @Override
     public T style(String style) {
-        mxCell.style(style);
+        mxCell().style(style);
         return (T) this;
     }
 
     @Override
     public String style() {
-        return mxCell.style();
+        return mxCell().style();
     }
 
     @SuppressWarnings("unchecked")
@@ -44,10 +49,9 @@ public class MxCellBasedShape<T extends MxCellBasedShape<T>> implements Stylable
                 .width(width)
                 .height(height)
                 .as("alternateBounds");
-        mxCell.mxGeometry().mxRectangle(alternateBounds);
+        mxCell().mxGeometry().mxRectangle(alternateBounds);
         return (T) this;
     }
-
 
     public static MxGeometry createDefaultGeometry() {
         return new MxGeometry()

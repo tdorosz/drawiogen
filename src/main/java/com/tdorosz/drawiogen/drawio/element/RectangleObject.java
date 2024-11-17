@@ -3,12 +3,13 @@ package com.tdorosz.drawiogen.drawio.element;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.WhiteSpace;
 import com.tdorosz.drawiogen.drawio.xmlschema.MxCell;
+import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 
 import java.util.UUID;
 
 import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 
-public class RectangleCell extends MxCellBasedShape<RectangleCell> {
+public class RectangleObject extends MxObjectBasedShape<RectangleObject> {
 
     private static final String DEFAULT_STYLE = new RectangleStyle<>()
             .html(BinaryState.ON)
@@ -16,33 +17,35 @@ public class RectangleCell extends MxCellBasedShape<RectangleCell> {
             .whiteSpace(WhiteSpace.WRAP)
             .toStyleString();
 
-    public static RectangleCell createNew() {
+    public static RectangleObject createNew() {
         MxCell mxCell = new MxCell()
-                .id(UUID.randomUUID().toString())
                 .vertex("1")
                 .style(DEFAULT_STYLE)
                 .mxGeometry(createDefaultGeometry());
+        MxObject mxObject = new MxObject()
+                .id(UUID.randomUUID().toString())
+                .mxCell(mxCell)
+                .label("");
 
-        return new RectangleCell(mxCell);
+        return new RectangleObject(mxObject);
     }
 
-    public static RectangleCell from(MxCell mxCell) {
-        return new RectangleCell(mxCell);
+    public static RectangleObject from(MxObject mxObject) {
+        return new RectangleObject(mxObject);
     }
 
-    private RectangleCell(MxCell mxCell) {
-        super(mxCell);
+    private RectangleObject(MxObject mxObject) {
+        super(mxObject);
     }
 
-    public RectangleStyle<RectangleCell> styleEditBegin() {
-        return new RectangleStyle<>(this, mxCell.style());
+    public RectangleStyle<RectangleObject> styleEditBegin() {
+        return new RectangleStyle<>(this, mxObject.mxCell().style());
     }
 
-    public RectangleCell addStyle(String styleString) {
+    public RectangleObject addStyle(String styleString) {
         RectangleStyle<RectangleObject> style = new RectangleStyle<>(mxCell().style());
         mapStyleToObject(styleString, style);
         mxCell().style(style.toStyleString());
         return this;
     }
-
 }

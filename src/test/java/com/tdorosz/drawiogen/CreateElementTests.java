@@ -1,8 +1,8 @@
 package com.tdorosz.drawiogen;
 
 import com.tdorosz.drawiogen.drawio.element.Group;
-import com.tdorosz.drawiogen.drawio.element.ProcessCell;
 import com.tdorosz.drawiogen.drawio.element.RectangleCell;
+import com.tdorosz.drawiogen.drawio.element.RectangleObject;
 import com.tdorosz.drawiogen.drawio.element.RootContainer;
 import com.tdorosz.drawiogen.drawio.element.style.BinaryState;
 import com.tdorosz.drawiogen.drawio.element.style.DrawioColor;
@@ -49,12 +49,11 @@ public class CreateElementTests {
                 .sketch(BinaryState.ON)
                 .styleEditCommit();
 
-        ProcessCell process = ProcessCell.createNew()
+        RectangleObject rectangleObject = RectangleObject.createNew()
                 .parent(group.id())
-                .value("Hello World")
                 .styleEditBegin()
-                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_TOMATO))
-                .strokeColor(DrawioColor.fromColor(DrawioColor.COLOR_SPRINGGREEN))
+                .fillColor(DrawioColor.fromColor(DrawioColor.COLOR_SANDYBROWN))
+                .glass(BinaryState.ON)
                 .styleEditCommit();
 
         MxFile test = new MxFile()
@@ -63,8 +62,8 @@ public class CreateElementTests {
                                 .mxGraphModel(new MxGraphModel()
                                         .pageHeight(200).pageWidth(200)
                                         .root(new MxRoot()
-                                                .cells(List.of(container.getMxCell(), group.getMxCell(), rectangle2.mxCell(), process.mxCell()))
-                                                .objects(List.of())
+                                                .cells(List.of(container.getMxCell(), group.getMxCell()))
+                                                .objects(List.of(rectangleObject.mxObject()))
                                         ))
                 ));
 
@@ -73,7 +72,6 @@ public class CreateElementTests {
 
         Files.writeString(Path.of(FILE_PATH), xml);
     }
-
 
     @Test
     void updateRectangle() throws IOException {
