@@ -17,6 +17,7 @@ import static com.tdorosz.drawiogen.drawio.util.StyleMapper.mapStyleToObject;
 public abstract class SimpleShape<T extends SimpleShape<T, S>, S extends BaseStyle<T, S>>
         implements Stylable<T>, DrawioElementModelProvider {
 
+    private static final String COMPLEX_ELEMENT_TYPE = "complexElementType";
     protected MxObject mxObject;
     protected MxCell mxCell;
 
@@ -144,6 +145,12 @@ public abstract class SimpleShape<T extends SimpleShape<T, S>, S extends BaseSty
     public T tooltip(String tooltip) {
         changeToMxObject();
         this.mxObject.tooltip(tooltip);
+        return (T) this;
+    }
+
+    public T complexElementType(String value) {
+        changeToMxObject();
+        this.mxObject.complexElementType(value);
         return (T) this;
     }
 

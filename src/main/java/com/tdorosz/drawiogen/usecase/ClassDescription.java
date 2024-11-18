@@ -15,17 +15,28 @@ import java.util.List;
 public class ClassDescription implements DrawioElementModelProvider<ClassDescription> {
 
     @Getter
-    private final ClassDetails renderer = new ClassDetails();
-    private final List<String> logLines = new ArrayList<>();
+    private final ClassDetails renderer;
+    private final List<String> logLines;
 
     private LogLinesFormatter logLinesFormatter = new DeaultLogLinesFormatter();
 
     public ClassDescription() {
+        renderer = new ClassDetails();
+        logLines = new ArrayList<>();
         renderer.getBottomRightRectangle()
                 .value("Logs")
                 .styleEditBegin()
                 .editable(BinaryState.OFF)
                 .styleEditCommit();
+    }
+
+    public ClassDescription(ClassDetails renderer, List<String> logLines) {
+        this.renderer = renderer;
+        this.logLines = logLines;
+    }
+
+    public static ClassDescription from(ClassDetails classDetails) {
+        return new ClassDescription(classDetails, new ArrayList<>());
     }
 
     public ClassDescription addLogLines(List<String> logLines) {
@@ -65,5 +76,9 @@ public class ClassDescription implements DrawioElementModelProvider<ClassDescrip
         renderer.getBottomRightRectangle()
                 .tooltip(logsTooltipText)
                 .value("Logs: %s".formatted(logLines.size()));
+    }
+
+    public void position(int x, int y) {
+        renderer.getRoot().position(x, y);
     }
 }

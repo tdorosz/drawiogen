@@ -28,8 +28,12 @@ public class MxObject {
     @XmlAttribute
     private String tooltip;
 
+    @XmlAttribute
+    private String complexElementType;
+
     @XmlElement(name = "mxCell")
     private MxCell mxCell;
+
 
     public MxObject arguments(Map<String, String> map) {
         if (map == null) {
@@ -37,6 +41,18 @@ public class MxObject {
         } else {
             arguments = new HashMap<>();
             map.forEach((key, value) -> arguments.put(new QName(key), value));
+        }
+        return this;
+    }
+
+    public MxObject addArgument(String key, String value) {
+        if (arguments == null) {
+            arguments = new HashMap<>();
+        }
+        if (value == null) {
+            arguments.remove(new QName(key));
+        } else {
+            arguments.put(new QName(key), value);
         }
         return this;
     }

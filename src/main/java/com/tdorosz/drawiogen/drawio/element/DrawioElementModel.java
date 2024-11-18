@@ -5,8 +5,7 @@ import com.tdorosz.drawiogen.drawio.xmlschema.MxObject;
 import lombok.Data;
 import lombok.experimental.Accessors;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Data
 @Accessors(fluent = true, chain = true)
@@ -43,5 +42,46 @@ public class DrawioElementModel {
                 .filter(obj -> obj.id().equals(id))
                 .findFirst()
                 .orElse(null);
+    }
+
+    public DrawioElementModel extractFromId(String id) {
+        List<MxCell> filteredCells = new ArrayList<>();
+        List<MxObject> filteredObjects = new ArrayList<>();
+
+        mxCells.stream().filter(cell -> id.equals(cell.id()))
+                .forEach(filteredCells::add);
+
+        mxObjects.stream().filter(obj -> id.equals(obj.id()))
+                .forEach(filteredObjects::add);
+
+        Deque<String> ids = new ArrayDeque<>();
+        ids.add(id);
+        while (!ids.isEmpty()) {
+            String processingId = ids.pop();
+            mxCells.stream().filter(cell -> processingId.equals(cell.parent())).forEach(cell -> {
+                filteredCells.add(cell);
+                ids.add(cell.id());
+            });
+
+            mxObjects.stream().filter(obj -> processingId.equals(obj.mxCell().parent())).forEach(obj -> {
+                filteredObjects.add(obj);
+                ids.add(obj.id());
+            });
+        }
+
+        return new DrawioElementModel(id, filteredCells, filteredObjects);
+    }
+
+    public DrawioElementModel filterByComplexElementPart(String partName) {
+        MxObject root = mxObjects.stream().filter(obj -> rootId.equals(obj.mxCell().parent()))
+                .filter(obj -> partName.equals(obj.complexElementType()))
+                .findFirst()
+                .orElse(null);
+
+        if (root == null) {
+            return null;
+        }
+
+        return extractFromId(root.id());
     }
 }

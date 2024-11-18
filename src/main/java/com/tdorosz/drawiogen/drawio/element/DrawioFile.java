@@ -18,6 +18,10 @@ public class DrawioFile {
         return new DrawioFile(mxFile);
     }
 
+    public static DrawioFile from(MxFile mxFile) {
+        return new DrawioFile(mxFile);
+    }
+
     public MxFile mxFile() {
         return mxFile;
     }
